@@ -1,6 +1,15 @@
 let User = require('../models/user');
 let helper = require('../helpers/util');
 
+const token = (req,res) => {
+  let user = helper.getUserDetail(`${req.body.token}`);
+  console.log(user.err)
+  console.log(user);
+  if (user.hasOwnProperty('error')) res.send({err:user.error});
+  else res.send(user);
+  
+}
+
 const login = (req,res) => {
   if (typeof req.body.username === '') res.send({err:'Username must be filled'});
   else if (typeof req.body.password === '') res.send({err:'Password must be filled'});
@@ -34,5 +43,6 @@ const register = (req,res,next) => {
 }
 module.exports = {
   login,
-  register
+  register,
+  token
 }
