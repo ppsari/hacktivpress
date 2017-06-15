@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const helper = require('../helpers/util');
 let userSchema = new Schema({
+  articleList : [{type: Schema.Types.ObjectId, ref: 'Article'}],
   username : {
     type: String,
     required: [true,'{PATH} must be filled'],
@@ -15,8 +16,7 @@ let userSchema = new Schema({
       validator: function(val) {return val.length >= 5 && val.length <= 20},
       message: '{PATH} must be between 5 and 20 char length'
     }
-  },
-  articleList : [{type: Schema.Types.ObjectId, ref: 'Article'}]
+  }
 });
 
 // schema.pre('save', function(next) {
@@ -28,7 +28,6 @@ let userSchema = new Schema({
 
 userSchema.pre('save',function(next)
 {
-  console.log(this._doc.password)
   this._doc.password = helper.hashPassword(this._doc.password);
   next();
 })
