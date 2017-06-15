@@ -2,8 +2,21 @@ let User = require('../models/user');
 let helper = require('../helpers/util');
 
 const login = (req,res) => {
-  res.send('ba')
+  if (typeof req.body.username === '') res.send({err:'Username must be filled'});
+  else if (typeof req.body.password === '') res.send({err:'Password must be filled'});
+  else {
+    User.findOne({username:req.body.username},(err,user)=>{
+      if (err) res.send({err:'Invalid username/password'})
+      else if (!helper.checkPass(req.body.password,user.password)) res.send({err:'Invalid username/password'})
+      else {
+        let userDt = {username:user.username,_id:user._id}
+        res.send({token: helper.createToken(userDt)})
+      }
+    })
+  }
 }
+
+
 const register = (req,res,next) => {
   let user = new User(req.body);
   user.save((err,user)=>{

@@ -3,7 +3,7 @@ var router = express.Router();
 let loginCtrl = require('../controllers/loginCtrl')
 
 /* GET home page. */
-router.post('/login', loginCtrl.login);
-router.post('/register',loginCtrl.register);
+router.post('/login', loginCtrl.login); //v
+router.post('/register',loginCtrl.register); //v
 
 module.exports = router;
