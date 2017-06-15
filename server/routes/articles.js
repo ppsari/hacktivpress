@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-let articleCtrl = require('articleCtrl');
+let articleCtrl = require('../controllers/articleCtrl');
 
 /* GET articles listing. */
 router.get('/',articleCtrl.getAllArticle);
